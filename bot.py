@@ -42,8 +42,8 @@ class Vch_kankei(commands.Cog, name = "ボイチャ"):
         super().__init__()
         self.bot: commands.Bot = bot
         # 音声を流す準備および音を小さく
-        #self.source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("https://kagamiya.work/gallery/voicefile/Q-furi-rugi2.mp3"), volume=0.2)
-        self.source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("guitar.mp3"), volume=0.9)
+        self.source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("https://kagamiya.work/gallery/voicefile/Q-furi-rugi2.mp3"), volume=0.2)
+        #self.source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("guitar.mp3"), volume=0.9)
         self.guild = bot.get_guild(int(os.getenv('GUILD_ID')))
         # 人数取得の準備
         self.stagevch = bot.get_channel(int(os.getenv('STAGEVCH_ID')))
