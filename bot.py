@@ -64,14 +64,14 @@ class Vch_kankei(commands.Cog, name = "ボイチャ"):
     @commands.hybrid_command(name = 'きゅーふり', aliases=['キューふり', 'キュー', 'きゅー'])
     async def Q_furi(self, ctx: commands.Context):
         """キュー返すよ"""
-        await ctx.send(self.voice_client.is_connected, voice_client.is_connected, ctx.message.guild.voice_client.is_connected, ctx.message.guild.voice_client.user.is_connected)
+        #await ctx.send(self.voice_client.is_connected, voice_client.is_connected, ctx.message.guild.voice_client.is_connected, ctx.message.guild.voice_client.user.is_connected)
         # ぼいちゃにいないのに呼ばれたら注意する
         if ctx.author.voice is None:
             await ctx.send("ぼいちゃに入ってから呼んでください。")
             return
         # 音声を流す準備および音を小さく
         source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("https://kagamiya.work/gallery/voicefile/Q-furi-rugi2.mp3"), volume=0.2)
-        if self.voice_client.is_connected:
+        if ctx.bot.voice_client.is_connected:
             voice = ctx.guild.voice_client
         else:
             # ぼいちゃに接続する
@@ -89,7 +89,7 @@ class Vch_kankei(commands.Cog, name = "ボイチャ"):
     async def bye_bye(self, ctx: commands.Context):
         """切断するよ"""
         # botがぼいちゃにいないのに切断しようとしたら注意する
-        if not self.voice_client.is_connected:
+        if not ctx.bot.voice_client.is_connected:
             await ctx.send("私ぼいちゃにいませんよ。")
             return
 
