@@ -1,4 +1,3 @@
-#from keep_alive import keep_alive
 import discord
 from discord.ext import commands
 import random
@@ -175,11 +174,4 @@ async def on_command_error(ctx: commands.Context, error):
     await ctx.send(f'ここ私の動く鯖じゃないです', ephemeral=True)
 
 
-while __name__ == '__main__':
-  try:
-    #keep_alive()
-    bot.run(os.getenv('TOKEN'))
-  except discord.errors.HTTPException as e:
-    print(e)
-    print("\n\n\nBLOCKED BY RATE LIMITS\nRESTARTING NOW\n\n\n")
-    os.system('kill 1')
+bot.run(os.getenv('TOKEN'))
