@@ -41,9 +41,6 @@ class Vch_kankei(commands.Cog, name = "ボイチャ"):
     def __init__(self, bot: commands.Bot):
         super().__init__()
         self.bot: commands.Bot = bot
-        # 音声を流す準備および音を小さく
-        self.source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("https://kagamiya.work/gallery/voicefile/Q-furi-rugi2.mp3"), volume=0.2)
-        #self.source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("guitar.mp3"), volume=0.9)
         self.guild = bot.get_guild(int(os.getenv('GUILD_ID')))
         # 人数取得の準備
         self.stagevch = bot.get_channel(int(os.getenv('STAGEVCH_ID')))
@@ -72,12 +69,12 @@ class Vch_kankei(commands.Cog, name = "ボイチャ"):
         if ctx.author.voice is None:
             await ctx.send("ぼいちゃに入ってから呼んでください。")
             return
+        # 音声を流す準備および音を小さく
+        source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("https://kagamiya.work/gallery/voicefile/Q-furi-rugi2.mp3"), volume=0.2)
         # ぼいちゃに接続する
         await ctx.author.voice.channel.connect()
-        await ctx.send("ぼいちゃに入りました")
-        ctx.message.guild.voice_client.play(self.source)
-        await ctx.send("はじまりはじまりー！")
-        #return 
+        voice_client.play(source)
+        await ctx.send("はじまりはじまりー！") 
         
 
     # ボイチャから切断する
