@@ -71,9 +71,16 @@ class Vch_kankei(commands.Cog, name = "ボイチャ"):
             return
         # 音声を流す準備および音を小さく
         source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("https://kagamiya.work/gallery/voicefile/Q-furi-rugi2.mp3"), volume=0.2)
-        # ぼいちゃに接続する
-        await ctx.author.voice.channel.connect()
-        voice_client.play(source)
+        if voice_client.is_connected:
+            voice = guild.voice_client
+        else:
+            # ぼいちゃに接続する
+            voice = await ctx.author.voice.channel.connect()
+        # 再生中の場合は再生しない
+        if ctx.guild.voice_client.is_playing():
+            await ctx.send("再生中です。")
+            return
+        ctx.author.voice_client.play(source)
         await ctx.send("はじまりはじまりー！") 
         
 
@@ -82,7 +89,7 @@ class Vch_kankei(commands.Cog, name = "ボイチャ"):
     async def bye_bye(self, ctx: commands.Context):
         """切断するよ"""
         # botがぼいちゃにいないのに切断しようとしたら注意する
-        if ctx.message.guild.voice_client is None:
+        if not voice_client.is_connected:
             await ctx.send("私ぼいちゃにいませんよ。")
             return
 
