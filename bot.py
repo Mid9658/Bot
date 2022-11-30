@@ -176,7 +176,7 @@ async def on_command_error(ctx: commands.Context, error):
 while __name__ == '__main__':
   try:
     #keep_alive()
-    bot.run(os.getenv('TOKEN'))
+    bot.run(TOKEN)
   except discord.errors.HTTPException as e:
     print(e)
     print("\n\n\nBLOCKED BY RATE LIMITS\nRESTARTING NOW\n\n\n")
