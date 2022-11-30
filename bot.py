@@ -73,14 +73,11 @@ class Vch_kankei(commands.Cog, name = "ボイチャ"):
             await ctx.send("ぼいちゃに入ってから呼んでください。")
             return
         # ぼいちゃに接続する
-        channel = ctx.author.voice.channel
-        await ctx.send("今行きますー")
-        voice = await channel.connect()
-        song = discord.FFmpegPCMAudio("song.wav")
-        await ctx.send("songいくよー")
-        voice_client.play(song)
+        await ctx.author.voice.channel.connect()
+        await ctx.send("ぼいちゃに入りました")
+        ctx.message.guild.voice_client.play(self.source)
         await ctx.send("はじまりはじまりー！")
-        #return voice_client.play(self.source)
+        #return 
         
 
     # ボイチャから切断する
