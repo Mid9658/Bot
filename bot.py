@@ -41,6 +41,8 @@ class Vch_kankei(commands.Cog, name = "ボイチャ"):
         super().__init__()
         self.bot: commands.Bot = bot
         self.guild = bot.get_guild(int(os.getenv('GUILD_ID')))
+        # 音声を流す準備および音を小さく
+        self.source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("https://kagamiya.work/gallery/voicefile/Q-furi-rugi2.mp3"), volume=0.2)
         # 人数取得の準備
         self.stagevch = bot.get_channel(int(os.getenv('STAGEVCH_ID')))
 
@@ -68,15 +70,13 @@ class Vch_kankei(commands.Cog, name = "ボイチャ"):
         if ctx.author.voice is None:
             await ctx.send("ぼいちゃに入ってから呼んでください。")
             return
-        # 音声を流す準備および音を小さく
-        source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("https://kagamiya.work/gallery/voicefile/Q-furi-rugi2.mp3"), volume=0.2)
         # ぼいちゃに接続する
         voice = await ctx.author.voice.channel.connect()
         # 再生中の場合は再生しない
-        if ctx.message.guild.voice_client.is_playing():
+        if ctx.guild.voice_client.is_playing():
             await ctx.send("再生中です。")
             return
-        voice.play(source)
+        voice.play(self.source)
         await ctx.send("はじまりはじまりー！") 
         
 
@@ -85,12 +85,12 @@ class Vch_kankei(commands.Cog, name = "ボイチャ"):
     async def bye_bye(self, ctx: commands.Context):
         """切断するよ"""
         # botがぼいちゃにいないのに切断しようとしたら注意する
-        if ctx.message.guild.voice_client is None:
+        if ctx.guild.voice_client is None:
             await ctx.send("私ぼいちゃにいませんよ。")
             return
 
         # 切断する
-        await ctx.message.guild.voice_client.disconnect()
+        await ctx.guild.voice_client.disconnect()
         self.VoiceProtocol.cleanup()
         await ctx.send("失礼しました～。")
 
