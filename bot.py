@@ -91,7 +91,7 @@ class Vch_kankei(commands.Cog, name = "ボイチャ"):
     async def bye_bye(self, ctx: commands.Context):
         """切断するよ"""
         # botがぼいちゃにいないのに切断しようとしたら注意する
-        if not ctx.message.author.voice is None:
+        if ctx.message.guild.voice_client is None:
             if not ctx.message.guild.voice_client.is_connected:
                 await ctx.send("私ぼいちゃにいませんよ。")
                 return
